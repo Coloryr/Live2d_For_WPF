@@ -43,7 +43,7 @@ void LAppDelegate::ReleaseInstance()
     s_instance = NULL;
 }
 
-bool LAppDelegate::Initialize()
+bool LAppDelegate::Initialize(int width, int height)
 {
     if (DebugLogEnable)
     {
@@ -51,17 +51,17 @@ bool LAppDelegate::Initialize()
     }
 
     // GLFWの初期化
-    if (glfwInit() == GL_FALSE)
+    /*if (glfwInit() == GL_FALSE)
     {
         if (DebugLogEnable)
         {
             LAppPal::PrintLog("Can't initilize GLFW");
         }
         return GL_FALSE;
-    }
+    }*/
 
     // Windowの生成_
-    _window = glfwCreateWindow(RenderTargetWidth, RenderTargetHeight, "SAMPLE", NULL, NULL);
+    /*_window = glfwCreateWindow(RenderTargetWidth, RenderTargetHeight, "SAMPLE", NULL, NULL);
     if (_window == NULL)
     {
         if (DebugLogEnable)
@@ -70,11 +70,11 @@ bool LAppDelegate::Initialize()
         }
         glfwTerminate();
         return GL_FALSE;
-    }
+    }*/
 
     // Windowのコンテキストをカレントに設定
-    glfwMakeContextCurrent(_window);
-    glfwSwapInterval(1);
+    //glfwMakeContextCurrent(_window);
+    //glfwSwapInterval(1);
 
     if (glewInit() != GLEW_OK) {
         if (DebugLogEnable)
@@ -94,12 +94,11 @@ bool LAppDelegate::Initialize()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     //コールバック関数の登録
-    glfwSetMouseButtonCallback(_window, EventHandler::OnMouseCallBack);
-    glfwSetCursorPosCallback(_window, EventHandler::OnMouseCallBack);
+    //glfwSetMouseButtonCallback(_window, EventHandler::OnMouseCallBack);
+    //glfwSetCursorPosCallback(_window, EventHandler::OnMouseCallBack);
 
     // ウィンドウサイズ記憶
-    int width, height;
-    glfwGetWindowSize(LAppDelegate::GetInstance()->GetWindow(), &width, &height);
+    //glfwGetWindowSize(LAppDelegate::GetInstance()->GetWindow(), &width, &height);
     _windowWidth = width;
     _windowHeight = height;
 
@@ -114,10 +113,7 @@ bool LAppDelegate::Initialize()
 
 void LAppDelegate::Release()
 {
-    // Windowの削除
-    glfwDestroyWindow(_window);
-
-    glfwTerminate();
+    //glfwTerminate();
 
     delete _textureManager;
     delete _view;
@@ -129,53 +125,39 @@ void LAppDelegate::Release()
     CubismFramework::Dispose();
 }
 
-void LAppDelegate::Run()
+void LAppDelegate::Run(int width, int height, double time)
 {
-    //メインループ
-    while (glfwWindowShouldClose(_window) == GL_FALSE && !_isEnd)
+    if ((_windowWidth != width || _windowHeight != height) && width > 0 && height > 0)
     {
-        int width, height;
-        glfwGetWindowSize(LAppDelegate::GetInstance()->GetWindow(), &width, &height);
-        if( (_windowWidth!=width || _windowHeight!=height) && width>0 && height>0)
-        {
-            //AppViewの初期化
-            _view->Initialize();
-            // スプライトサイズを再設定
-            _view->ResizeSprite();
-            // サイズを保存しておく
-            _windowWidth = width;
-            _windowHeight = height;
+        //AppViewの初期化
+        _view->Initialize();
+        // スプライトサイズを再設定
+        _view->ResizeSprite();
+        // サイズを保存しておく
+        _windowWidth = width;
+        _windowHeight = height;
 
-            // ビューポート変更
-            glViewport(0, 0, width, height);
-        }
-
-        // 時間更新
-        LAppPal::UpdateTime();
-
-        // 画面の初期化
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glClearDepth(1.0);
-
-        //描画更新
-        _view->Render();
-
-        // バッファの入れ替え
-        glfwSwapBuffers(_window);
-
-        // Poll for and process events
-        glfwPollEvents();
+        // ビューポート変更
+        glViewport(0, 0, width, height);
     }
 
-    Release();
+    // 時間更新
+    LAppPal::UpdateTime(time);
 
-    LAppDelegate::ReleaseInstance();
+    // 画面の初期化
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearDepth(1.0);
+
+    //描画更新
+    _view->Render();
+
+    // Poll for and process events
+    //glfwPollEvents();
 }
 
 LAppDelegate::LAppDelegate():
     _cubismOption(),
-    _window(NULL),
     _captured(false),
     _mouseX(0.0f),
     _mouseY(0.0f),
@@ -208,7 +190,7 @@ void LAppDelegate::InitializeCubism()
     //default proj
     CubismMatrix44 projection;
 
-    LAppPal::UpdateTime();
+    LAppPal::UpdateTime(0);
 
     _view->InitializeSprite();
 }

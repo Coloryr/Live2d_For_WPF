@@ -5,7 +5,13 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OpenTK" Version="4.7.1" />
+    <PackageReference Include="OpenTK.WinForms" Version="4.0.0-pre.6" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Live2d_Lib\Live2d_Lib.vcxproj" />

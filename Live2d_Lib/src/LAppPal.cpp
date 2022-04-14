@@ -66,9 +66,9 @@ csmFloat32  LAppPal::GetDeltaTime()
     return static_cast<csmFloat32>(s_deltaTime);
 }
 
-void LAppPal::UpdateTime()
+void LAppPal::UpdateTime(double time)
 {
-    s_currentFrame = glfwGetTime();
+    s_currentFrame = time;
     s_deltaTime = s_currentFrame - s_lastFrame;
     s_lastFrame = s_currentFrame;
 }

@@ -48,7 +48,7 @@ public:
     */
     static Csm::csmFloat32 GetDeltaTime();
 
-    static void UpdateTime();
+    static void UpdateTime(double time);
 
     /**
     * @brief ログを出力する

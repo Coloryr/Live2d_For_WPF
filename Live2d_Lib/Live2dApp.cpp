@@ -3,10 +3,19 @@
 public ref class Live2dApp
 {
 public:
-	void Start() 
+	bool Start(int width, int height)
 	{
-		if (LAppDelegate::GetInstance()->Initialize() == GL_FALSE)
+		return LAppDelegate::GetInstance()->Initialize(width, height) != GL_FALSE;
+	}
 
-		LAppDelegate::GetInstance()->Run();
+	void Tick(int width, int height, double time)
+	{
+		LAppDelegate::GetInstance()->Run(width, height, time);
+	}
+
+	void Close() 
+	{
+		LAppDelegate::GetInstance()->Release();
+		LAppDelegate::ReleaseInstance();
 	}
 };

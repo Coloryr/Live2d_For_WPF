@@ -38,7 +38,7 @@ public:
     /**
     * @brief   APPに必要なものを初期化する。
     */
-    bool Initialize();
+    bool Initialize(int width, int height);
 
     /**
     * @brief   解放する。
@@ -48,7 +48,7 @@ public:
     /**
     * @brief   実行処理。
     */
-    void Run();
+    void Run(int width, int height, double time);
 
     /**
     * @brief   OpenGL用 glfwSetMouseButtonCallback用関数。
@@ -75,11 +75,6 @@ public:
     GLuint CreateShader();
 
     /**
-    * @brief   Window情報を取得する。
-    */
-    GLFWwindow* GetWindow() { return _window; }
-
-    /**
     * @brief   View情報を取得する。
     */
     LAppView* GetView() { return _view; }
@@ -95,6 +90,10 @@ public:
     void AppEnd() { _isEnd = true; }
 
     LAppTextureManager* GetTextureManager() { return _textureManager; }
+
+    int GetWidth() { return _windowWidth; }
+
+    int GetHeight() { return _windowHeight; }
 
 private:
     /**
@@ -119,7 +118,6 @@ private:
 
     LAppAllocator _cubismAllocator;              ///< Cubism SDK Allocator
     Csm::CubismFramework::Option _cubismOption;  ///< Cubism SDK Option
-    GLFWwindow* _window;                         ///< OpenGL ウィンドウ
     LAppView* _view;                             ///< View情報
     bool _captured;                              ///< クリックしているか
     float _mouseX;                               ///< マウスX座標

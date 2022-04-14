@@ -58,7 +58,8 @@ LAppView::~LAppView()
 void LAppView::Initialize()
 {
     int width, height;
-    glfwGetWindowSize(LAppDelegate::GetInstance()->GetWindow(), &width, &height);
+    width = LAppDelegate::GetInstance()->GetWidth();
+    height = LAppDelegate::GetInstance()->GetHeight();
 
     if(width==0 || height==0)
     {
@@ -144,7 +145,8 @@ void LAppView::InitializeSprite()
     _programId = LAppDelegate::GetInstance()->CreateShader();
 
     int width, height;
-    glfwGetWindowSize(LAppDelegate::GetInstance()->GetWindow(), &width, &height);
+    width = LAppDelegate::GetInstance()->GetWidth();
+    height = LAppDelegate::GetInstance()->GetHeight();
 
     LAppTextureManager* textureManager = LAppDelegate::GetInstance()->GetTextureManager();
     const string resourcesPath = ResourcesPath;
@@ -264,7 +266,8 @@ void LAppView::PreModelDraw(LAppModel& refModel)
         if (!useTarget->IsValid())
         {// 描画ターゲット内部未作成の場合はここで作成
             int width, height;
-            glfwGetWindowSize(LAppDelegate::GetInstance()->GetWindow(), &width, &height);
+            width = LAppDelegate::GetInstance()->GetWidth();
+            height = LAppDelegate::GetInstance()->GetHeight();
             if (width != 0 && height != 0)
             {
                 // モデル描画キャンバス
@@ -348,7 +351,8 @@ void LAppView::ResizeSprite()
 
     // 描画領域サイズ
     int width, height;
-    glfwGetWindowSize(LAppDelegate::GetInstance()->GetWindow(), &width, &height);
+    width = LAppDelegate::GetInstance()->GetWidth();
+    height = LAppDelegate::GetInstance()->GetHeight();
 
     float x = 0.0f;
     float y = 0.0f;
