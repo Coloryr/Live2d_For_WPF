@@ -27,28 +27,6 @@ namespace LAppDefine {
     const csmFloat32 ViewLogicalMaxBottom = -2.0f;
     const csmFloat32 ViewLogicalMaxTop = 2.0f;
 
-    // 相対パス
-    const csmChar* ResourcesPath = "Resources/";
-
-    // モデルの後ろにある背景の画像ファイル
-    const csmChar* BackImageName = "back_class_normal.png";
-    // 歯車
-    const csmChar* GearImageName = "icon_gear.png";
-    // 終了ボタン
-    const csmChar* PowerImageName = "close.png";
-
-    // モデル定義------------------------------------------
-    // モデルを配置したディレクトリ名の配列
-    // ディレクトリ名とmodel3.jsonの名前を一致させておくこと
-    const csmChar* ModelDir[] = {
-        "Haru",
-        "Hiyori",
-        "Mark",
-        "Natori",
-        "Rice"
-    };
-    const csmInt32 ModelDirSize = sizeof(ModelDir) / sizeof(const csmChar*);
-
     // 外部定義ファイル(json)と合わせる
     const csmChar* MotionGroupIdle = "Idle"; // アイドリング
     const csmChar* MotionGroupTapBody = "TapBody"; // 体をタップしたとき

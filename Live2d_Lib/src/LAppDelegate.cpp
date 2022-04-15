@@ -8,7 +8,6 @@
 #include "LAppDelegate.hpp"
 #include <iostream>
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include "LAppView.hpp"
 #include "LAppPal.hpp"
 #include "LAppDefine.hpp"
@@ -50,38 +49,11 @@ bool LAppDelegate::Initialize(int width, int height)
         LAppPal::PrintLog("START");
     }
 
-    // GLFWの初期化
-    /*if (glfwInit() == GL_FALSE)
-    {
-        if (DebugLogEnable)
-        {
-            LAppPal::PrintLog("Can't initilize GLFW");
-        }
-        return GL_FALSE;
-    }*/
-
-    // Windowの生成_
-    /*_window = glfwCreateWindow(RenderTargetWidth, RenderTargetHeight, "SAMPLE", NULL, NULL);
-    if (_window == NULL)
-    {
-        if (DebugLogEnable)
-        {
-            LAppPal::PrintLog("Can't create GLFW window.");
-        }
-        glfwTerminate();
-        return GL_FALSE;
-    }*/
-
-    // Windowのコンテキストをカレントに設定
-    //glfwMakeContextCurrent(_window);
-    //glfwSwapInterval(1);
-
     if (glewInit() != GLEW_OK) {
         if (DebugLogEnable)
         {
             LAppPal::PrintLog("Can't initilize glew.");
         }
-        glfwTerminate();
         return GL_FALSE;
     }
 
@@ -92,10 +64,6 @@ bool LAppDelegate::Initialize(int width, int height)
     //透過設定
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    //コールバック関数の登録
-    //glfwSetMouseButtonCallback(_window, EventHandler::OnMouseCallBack);
-    //glfwSetCursorPosCallback(_window, EventHandler::OnMouseCallBack);
 
     // ウィンドウサイズ記憶
     //glfwGetWindowSize(LAppDelegate::GetInstance()->GetWindow(), &width, &height);
@@ -145,7 +113,7 @@ void LAppDelegate::Run(int width, int height, double time)
     LAppPal::UpdateTime(time);
 
     // 画面の初期化
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearDepth(1.0);
 
@@ -195,23 +163,18 @@ void LAppDelegate::InitializeCubism()
     _view->InitializeSprite();
 }
 
-void LAppDelegate::OnMouseCallBack(GLFWwindow* window, int button, int action, int modify)
+void LAppDelegate::OnMouseCallBack(int button)
 {
     if (_view == NULL)
     {
         return;
     }
-    if (GLFW_MOUSE_BUTTON_LEFT != button)
-    {
-        return;
-    }
-
-    if (GLFW_PRESS == action)
+    if (button == 0)
     {
         _captured = true;
         _view->OnTouchesBegan(_mouseX, _mouseY);
     }
-    else if (GLFW_RELEASE == action)
+    else if (button == 1)
     {
         if (_captured)
         {
@@ -221,7 +184,7 @@ void LAppDelegate::OnMouseCallBack(GLFWwindow* window, int button, int action, i
     }
 }
 
-void LAppDelegate::OnMouseCallBack(GLFWwindow* window, double x, double y)
+void LAppDelegate::OnMouseCallBack(double x, double y)
 {
     _mouseX = static_cast<float>(x);
     _mouseY = static_cast<float>(y);

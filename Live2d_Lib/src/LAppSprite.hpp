@@ -8,7 +8,6 @@
 #pragma once
 
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 
 /**
 * @brief スプライトを実装するクラス。

@@ -3,17 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32408.312
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Live2d_For_WPF", "Live2d_For_WPF\Live2d_For_WPF.csproj", "{A4088883-3204-4464-9856-587AED2EE041}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Live2d_For_WPF", "Live2d_For_WPF\Live2d_For_WPF.csproj", "{A4088883-3204-4464-9856-587AED2EE041}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Live2d_Lib", "Live2d_Lib\Live2d_Lib.vcxproj", "{AB89BA98-130C-4142-90F1-16C25D002330}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Live2d_Framework", "Live2d_Framework\Live2d_Framework.vcxproj", "{E69F5299-6B60-4535-A425-A1EE057E6389}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Live2d_glew_s", "Live2d_glew_s\Live2d_glew_s.vcxproj", "{3F458419-81A9-4786-B49A-E9A6688E5A7F}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Live2d_glfw3", "Live2d_glfw3\Live2d_glfw3.vcxproj", "{4301D8DD-E0CD-41C2-811E-08C2F69DC0AA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Live2d_Test", "Live2d_Test\Live2d_Test.csproj", "{08DFF150-1E4D-45F1-B84D-C3D6FAEA8695}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,30 +69,6 @@ Global
 		{3F458419-81A9-4786-B49A-E9A6688E5A7F}.Release|x64.Build.0 = Release|x64
 		{3F458419-81A9-4786-B49A-E9A6688E5A7F}.Release|x86.ActiveCfg = Release|Win32
 		{3F458419-81A9-4786-B49A-E9A6688E5A7F}.Release|x86.Build.0 = Release|Win32
-		{4301D8DD-E0CD-41C2-811E-08C2F69DC0AA}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{4301D8DD-E0CD-41C2-811E-08C2F69DC0AA}.Debug|Any CPU.Build.0 = Debug|x64
-		{4301D8DD-E0CD-41C2-811E-08C2F69DC0AA}.Debug|x64.ActiveCfg = Debug|x64
-		{4301D8DD-E0CD-41C2-811E-08C2F69DC0AA}.Debug|x64.Build.0 = Debug|x64
-		{4301D8DD-E0CD-41C2-811E-08C2F69DC0AA}.Debug|x86.ActiveCfg = Debug|Win32
-		{4301D8DD-E0CD-41C2-811E-08C2F69DC0AA}.Debug|x86.Build.0 = Debug|Win32
-		{4301D8DD-E0CD-41C2-811E-08C2F69DC0AA}.Release|Any CPU.ActiveCfg = Release|x64
-		{4301D8DD-E0CD-41C2-811E-08C2F69DC0AA}.Release|Any CPU.Build.0 = Release|x64
-		{4301D8DD-E0CD-41C2-811E-08C2F69DC0AA}.Release|x64.ActiveCfg = Release|x64
-		{4301D8DD-E0CD-41C2-811E-08C2F69DC0AA}.Release|x64.Build.0 = Release|x64
-		{4301D8DD-E0CD-41C2-811E-08C2F69DC0AA}.Release|x86.ActiveCfg = Release|Win32
-		{4301D8DD-E0CD-41C2-811E-08C2F69DC0AA}.Release|x86.Build.0 = Release|Win32
-		{08DFF150-1E4D-45F1-B84D-C3D6FAEA8695}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{08DFF150-1E4D-45F1-B84D-C3D6FAEA8695}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{08DFF150-1E4D-45F1-B84D-C3D6FAEA8695}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{08DFF150-1E4D-45F1-B84D-C3D6FAEA8695}.Debug|x64.Build.0 = Debug|Any CPU
-		{08DFF150-1E4D-45F1-B84D-C3D6FAEA8695}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{08DFF150-1E4D-45F1-B84D-C3D6FAEA8695}.Debug|x86.Build.0 = Debug|Any CPU
-		{08DFF150-1E4D-45F1-B84D-C3D6FAEA8695}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{08DFF150-1E4D-45F1-B84D-C3D6FAEA8695}.Release|Any CPU.Build.0 = Release|Any CPU
-		{08DFF150-1E4D-45F1-B84D-C3D6FAEA8695}.Release|x64.ActiveCfg = Release|Any CPU
-		{08DFF150-1E4D-45F1-B84D-C3D6FAEA8695}.Release|x64.Build.0 = Release|Any CPU
-		{08DFF150-1E4D-45F1-B84D-C3D6FAEA8695}.Release|x86.ActiveCfg = Release|Any CPU
-		{08DFF150-1E4D-45F1-B84D-C3D6FAEA8695}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -33,6 +33,7 @@
     <ClCompile Include="src\TouchManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Live2dApp.h" />
     <ClInclude Include="src\LAppAllocator.hpp" />
     <ClInclude Include="src\LAppDefine.hpp" />
     <ClInclude Include="src\LAppDelegate.hpp" />
@@ -51,9 +52,6 @@
     </ProjectReference>
     <ProjectReference Include="..\Live2d_glew_s\Live2d_glew_s.vcxproj">
       <Project>{3f458419-81a9-4786-b49a-e9a6688e5a7f}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Live2d_glfw3\Live2d_glfw3.vcxproj">
-      <Project>{4301d8dd-e0cd-41c2-811e-08c2f69dc0aa}</Project>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -166,7 +164,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>true</EnableUAC>
-      <AdditionalDependencies>..\x64\Debug\Framework.lib;..\x64\Debug\glfw3.lib;opengl32.lib;glu32.lib;-NODEFAULTLIB:libcmtd.lib;..\Live2d_Framework\core\Live2DCubismCore_MDd.lib;..\x64\Debug\glew32d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\x64\Debug\Framework.lib;..\x64\Debug\glfw3.lib;opengl32.lib;glu32.lib;-NODEFAULTLIB:libcmtd.lib;..\Live2d_Framework\core\Live2DCubismCore_MDd.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

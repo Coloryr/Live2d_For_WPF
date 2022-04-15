@@ -8,7 +8,6 @@
 #include "LAppLive2DManager.hpp"
 #include <string>
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <Rendering/CubismRenderer.hpp>
 #include "LAppPal.hpp"
 #include "LAppDefine.hpp"
@@ -54,8 +53,6 @@ LAppLive2DManager::LAppLive2DManager()
     , _sceneIndex(0)
 {
     _viewMatrix = new CubismMatrix44();
-
-    ChangeScene(_sceneIndex);
 }
 
 LAppLive2DManager::~LAppLive2DManager()
@@ -161,31 +158,16 @@ void LAppLive2DManager::OnUpdate() const
     }
 }
 
-void LAppLive2DManager::NextScene()
+void LAppLive2DManager::ChangeScene(Csm::csmString dir, Csm::csmString name)
 {
-    csmInt32 no = (_sceneIndex + 1) % ModelDirSize;
-    ChangeScene(no);
-}
-
-void LAppLive2DManager::ChangeScene(Csm::csmInt32 index)
-{
-    _sceneIndex = index;
     if (DebugLogEnable)
     {
         LAppPal::PrintLog("[APP]model index: %d", _sceneIndex);
     }
 
-    // ModelDir[]に保持したディレクトリ名から
-    // model3.jsonのパスを決定する.
-    // ディレクトリ名とmodel3.jsonの名前を一致させておくこと.
-    std::string model = ModelDir[index];
-    std::string modelPath = ResourcesPath + model + "/";
-    std::string modelJsonName = ModelDir[index];
-    modelJsonName += ".model3.json";
-
     ReleaseAllModel();
     _models.PushBack(new LAppModel());
-    _models[0]->LoadAssets(modelPath.c_str(), modelJsonName.c_str());
+    _models[0]->LoadAssets(dir.GetRawString(), name.GetRawString());
 
     /*
      * モデル半透明表示を行うサンプルを提示する。

@@ -5,7 +5,9 @@ using OpenTK.Windowing.Common;
 using OpenTK.WinForms;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,7 +30,6 @@ namespace Live2d_For_WPF
     public partial class MainWindow : Window
     {
         private Timer _timer = null!;
-        private float _angle = 0.0f;
         private GLControl glControl;
         private Live2dApp live2d;
         public MainWindow()
@@ -36,6 +37,16 @@ namespace Live2d_For_WPF
             InitializeComponent();
 
             live2d = new();
+            live2d.SetCall(LoadFile);
+        }
+
+        private IntPtr LoadFile(string path, ref uint size) 
+        {
+            var temp = File.ReadAllBytes(path);
+            IntPtr inputBuffer = Marshal.AllocHGlobal(temp.Length * sizeof(byte));
+            Marshal.Copy(temp, 0, inputBuffer, temp.Length);
+            size = (uint)temp.Length;
+            return inputBuffer;
         }
 
         private void WindowsFormsHost_Initialized(object sender, EventArgs e)
@@ -49,15 +60,36 @@ namespace Live2d_For_WPF
 
             glControl.Resize += glControl_Resize;
             glControl.Paint += glControl_Paint;
+            glControl.MouseDown += GlControl_MouseDown;
+            glControl.MouseUp += GlControl_MouseUp;
+            glControl.MouseMove += GlControl_MouseMove;
 
             _timer = new Timer();
             _timer.Tick += (sender, e) =>
             {
-                _angle += 0.5f;
                 Render();
             };
-            _timer.Interval = 50;   // 1000 ms per sec / 50 ms per frame = 20 FPS
+            _timer.Interval = 10;   // 1000 ms per sec / 10 ms per frame = 100 FPS
             _timer.Start();
+        }
+
+        private void GlControl_MouseMove(object? sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            live2d.MouseMove(e.X, e.Y);
+        }
+
+        private void GlControl_MouseUp(object? sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+                return;
+            live2d.MouseEvent(1);
+        }
+
+        private void GlControl_MouseDown(object? sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+                return;
+            live2d.MouseEvent(0);
         }
 
         private void glControl_Resize(object? sender, EventArgs e)
@@ -71,6 +103,7 @@ namespace Live2d_For_WPF
             if (glControl.Width == 0)
                 return;
             live2d.Start(glControl.Width, glControl.Height);
+            live2d.LoadModel(AppContext.BaseDirectory + "Resources/Haru/", "Haru");
         }
 
         private void glControl_Paint(object sender, PaintEventArgs e)
@@ -78,14 +111,13 @@ namespace Live2d_For_WPF
             Render();
         }
 
-        private int a =0;
+        private DateTime beginTime = DateTime.Now;            //获取开始时间  
 
         private void Render()
         {
-            a++;
             glControl.MakeCurrent();
 
-            live2d.Tick(glControl.Width, glControl.Height, a);
+            live2d.Tick(glControl.Width, glControl.Height, (DateTime.Now - beginTime).TotalMilliseconds / 1000);
 
             glControl.SwapBuffers();
         }

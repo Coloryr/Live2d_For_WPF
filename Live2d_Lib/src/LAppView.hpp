@@ -8,7 +8,6 @@
 #pragma once
 
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <Math/CubismMatrix44.hpp>
 #include <Math/CubismViewMatrix.hpp>
 #include "CubismFramework.hpp"
@@ -151,9 +150,6 @@ private:
     Csm::CubismMatrix44* _deviceToScreen;    ///< デバイスからスクリーンへの行列
     Csm::CubismViewMatrix* _viewMatrix;      ///< viewMatrix
     GLuint _programId;                       ///< シェーダID
-    LAppSprite* _back;                       ///< 背景画像
-    LAppSprite* _gear;                       ///< ギア画像
-    LAppSprite* _power;                      ///< 電源画像
 
     // レンダリング先を別ターゲットにする方式の場合に使用
     LAppSprite* _renderSprite;                                      ///< モードによっては_renderBufferのテクスチャを描画

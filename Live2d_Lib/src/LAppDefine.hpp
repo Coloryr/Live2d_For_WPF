@@ -29,16 +29,6 @@ namespace LAppDefine {
     extern const csmFloat32 ViewLogicalMaxRight;    ///< 論理的なビュー座標系の右端の最大値
     extern const csmFloat32 ViewLogicalMaxBottom;   ///< 論理的なビュー座標系の下端の最大値
     extern const csmFloat32 ViewLogicalMaxTop;      ///< 論理的なビュー座標系の上端の最大値
-
-    extern const csmChar* ResourcesPath;            ///< 素材パス
-    extern const csmChar* BackImageName;         ///< 背景画像ファイル
-    extern const csmChar* GearImageName;         ///< 歯車画像ファイル
-    extern const csmChar* PowerImageName;        ///< 終了ボタン画像ファイル
-
-    // モデル定義--------------------------------------------
-    extern const csmChar* ModelDir[];               ///< モデルを配置したディレクトリ名の配列. ディレクトリ名とmodel3.jsonの名前を一致させておく.
-    extern const csmInt32 ModelDirSize;             ///< モデルディレクトリ配列のサイズ
-
                                                     // 外部定義ファイル(json)と合わせる
     extern const csmChar* MotionGroupIdle;          ///< アイドリング時に再生するモーションのリスト
     extern const csmChar* MotionGroupTapBody;       ///< 体をタップした時に再生するモーションのリスト

@@ -12,9 +12,9 @@
 #include <iostream>
 #include <fstream>
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <Model/CubismMoc.hpp>
 #include "LAppDefine.hpp"
+#include <Live2dApp.h>
 
 using std::endl;
 using namespace Csm;
@@ -30,35 +30,12 @@ csmByte* LAppPal::LoadFileAsBytes(const string filePath, csmSizeInt* outSize)
     //filePath;//
     const char* path = filePath.c_str();
 
-    int size = 0;
-    struct stat statBuf;
-    if (stat(path, &statBuf) == 0)
-    {
-        size = statBuf.st_size;
-    }
-
-    std::fstream file;
-    char* buf = new char[size];
-
-    file.open(path, std::ios::in | std::ios::binary);
-    if (!file.is_open())
-    {
-        if (DebugLogEnable)
-        {
-            PrintLog("file open error");
-        }
-        return NULL;
-    }
-    file.read(buf, size);
-    file.close();
-
-    *outSize = size;
-    return reinterpret_cast<csmByte*>(buf);
+    return LoadFileDO(filePath, outSize);
 }
 
 void LAppPal::ReleaseBytes(csmByte* byteData)
 {
-    delete[] byteData;
+    System::Runtime::InteropServices::Marshal::FreeHGlobal((System::IntPtr)byteData);
 }
 
 csmFloat32  LAppPal::GetDeltaTime()
