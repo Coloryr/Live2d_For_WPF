@@ -170,6 +170,7 @@ private:
                 && (getSignature[2] == referenceString[2]) && (getSignature[3] == referenceString[3]);
         }
 
+        System::IntPtr _fileByte1;
         Csm::csmByte* _fileByte; ///< ロードしたファイルのバイト列
         Csm::csmSizeInt _fileSize; ///< ファイルサイズ
         Csm::csmUint32 _readOffset; ///< ファイル参照位置

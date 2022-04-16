@@ -20,22 +20,24 @@
 #include "LAppPal.hpp"
 #include "LAppTextureManager.hpp"
 #include "LAppDelegate.hpp"
+#include "Live2dApp.h"
 
 using namespace Live2D::Cubism::Framework;
 using namespace Live2D::Cubism::Framework::DefaultParameterId;
 using namespace LAppDefine;
+using namespace System::Runtime::InteropServices;
 
 namespace {
-    csmByte* CreateBuffer(const csmChar* path, csmSizeInt* size)
+    System::IntPtr CreateBuffer(System::String^ path, csmSizeInt* size)
     {
         if (DebugLogEnable)
         {
             LAppPal::PrintLog("[APP]create buffer: %s ", path);
         }
-        return LAppPal::LoadFileAsBytes(path, size);
+        return LoadFileDO(path, size);
     }
 
-    void DeleteBuffer(csmByte* buffer, const csmChar* path = "")
+    void DeleteBuffer(System::IntPtr buffer, System::String^ path = "")
     {
         if (DebugLogEnable)
         {
@@ -78,9 +80,11 @@ LAppModel::~LAppModel()
     delete(_modelSetting);
 }
 
-void LAppModel::LoadAssets(const csmChar* dir, const csmChar* fileName)
+void LAppModel::LoadAssets(System::String^ dir, System::String^ fileName)
 {
-    _modelHomeDir = dir;
+    char* str1 = (char*)(void*)Marshal::StringToHGlobalAnsi(dir);
+    _modelHomeDir = csmString(str1);
+    Marshal::FreeHGlobal((System::IntPtr)str1);
 
     if (_debugMode)
     {
@@ -88,11 +92,11 @@ void LAppModel::LoadAssets(const csmChar* dir, const csmChar* fileName)
     }
 
     csmSizeInt size;
-    const csmString path = csmString(dir) + fileName;
+    System::String^ path = dir += fileName;
 
-    csmByte* buffer = CreateBuffer(path.GetRawString(), &size);
-    ICubismModelSetting* setting = new CubismModelSettingJson(buffer, size);
-    DeleteBuffer(buffer, path.GetRawString());
+    System::IntPtr buffer = CreateBuffer(path, &size);
+    ICubismModelSetting* setting = new CubismModelSettingJson((Csm::csmByte*)(void*)buffer, size);
+    DeleteBuffer(buffer, path);
 
     SetupModel(setting);
 
@@ -109,23 +113,27 @@ void LAppModel::SetupModel(ICubismModelSetting* setting)
 
     _modelSetting = setting;
 
-    csmByte* buffer;
+    System::IntPtr buffer;
+    csmByte* buffer1;
     csmSizeInt size;
 
     //Cubism Model
     if (strcmp(_modelSetting->GetModelFileName(), "") != 0)
     {
-        csmString path = _modelSetting->GetModelFileName();
-        path = _modelHomeDir + path;
+        System::String^ path = gcnew System::String(_modelSetting->GetModelFileName());
+        System::String^ dir = gcnew System::String(_modelHomeDir.GetRawString());
+        path = dir + path;
 
         if (_debugMode)
         {
             LAppPal::PrintLog("[APP]create model: %s", setting->GetModelFileName());
         }
 
-        buffer = CreateBuffer(path.GetRawString(), &size);
-        LoadModel(buffer, size);
-        DeleteBuffer(buffer, path.GetRawString());
+        System::String^ path1 = gcnew System::String(path);
+        buffer = CreateBuffer(path1, &size);
+        buffer1 = (Csm::csmByte*)(void*)buffer;
+        LoadModel(buffer1, size);
+        DeleteBuffer(buffer, path1);
     }
 
     //Expression
@@ -135,11 +143,14 @@ void LAppModel::SetupModel(ICubismModelSetting* setting)
         for (csmInt32 i = 0; i < count; i++)
         {
             csmString name = _modelSetting->GetExpressionName(i);
-            csmString path = _modelSetting->GetExpressionFileName(i);
-            path = _modelHomeDir + path;
 
-            buffer = CreateBuffer(path.GetRawString(), &size);
-            ACubismMotion* motion = LoadExpression(buffer, size, name.GetRawString());
+            System::String^ path = gcnew System::String(_modelSetting->GetModelFileName());
+            System::String^ dir = gcnew System::String(_modelHomeDir.GetRawString());
+            path = dir + path;
+
+            buffer = CreateBuffer(path, &size);
+            buffer1 = (Csm::csmByte*)(void*)buffer;
+            ACubismMotion* motion = LoadExpression(buffer1, size, name.GetRawString());
 
             if (_expressions[name] != NULL)
             {
@@ -148,30 +159,34 @@ void LAppModel::SetupModel(ICubismModelSetting* setting)
             }
             _expressions[name] = motion;
 
-            DeleteBuffer(buffer, path.GetRawString());
+            DeleteBuffer(buffer, path);
         }
     }
 
     //Physics
     if (strcmp(_modelSetting->GetPhysicsFileName(), "") != 0)
     {
-        csmString path = _modelSetting->GetPhysicsFileName();
-        path = _modelHomeDir + path;
+        System::String^ path = gcnew System::String(_modelSetting->GetPhysicsFileName());
+        System::String^ dir = gcnew System::String(_modelHomeDir.GetRawString());
+        path = dir + path;
 
-        buffer = CreateBuffer(path.GetRawString(), &size);
-        LoadPhysics(buffer, size);
-        DeleteBuffer(buffer, path.GetRawString());
+        buffer = CreateBuffer(path, &size);
+        buffer1 = (Csm::csmByte*)(void*)buffer;
+        LoadPhysics(buffer1, size);
+        DeleteBuffer(buffer, path);
     }
 
     //Pose
     if (strcmp(_modelSetting->GetPoseFileName(), "") != 0)
     {
-        csmString path = _modelSetting->GetPoseFileName();
-        path = _modelHomeDir + path;
+        System::String^ path = gcnew System::String(_modelSetting->GetPoseFileName());
+        System::String^ dir = gcnew System::String(_modelHomeDir.GetRawString());
+        path = dir + path;
 
-        buffer = CreateBuffer(path.GetRawString(), &size);
-        LoadPose(buffer, size);
-        DeleteBuffer(buffer, path.GetRawString());
+        buffer = CreateBuffer(path, &size);
+        buffer1 = (Csm::csmByte*)(void*)buffer;
+        LoadPose(buffer1, size);
+        DeleteBuffer(buffer, path);
     }
 
     //EyeBlink
@@ -198,11 +213,14 @@ void LAppModel::SetupModel(ICubismModelSetting* setting)
     //UserData
     if (strcmp(_modelSetting->GetUserDataFile(), "") != 0)
     {
-        csmString path = _modelSetting->GetUserDataFile();
-        path = _modelHomeDir + path;
-        buffer = CreateBuffer(path.GetRawString(), &size);
-        LoadUserData(buffer, size);
-        DeleteBuffer(buffer, path.GetRawString());
+        System::String^ path = gcnew System::String(_modelSetting->GetUserDataFile());
+        System::String^ dir = gcnew System::String(_modelHomeDir.GetRawString());
+        path = dir + path;
+
+        buffer = CreateBuffer(path, &size);
+        buffer1 = (Csm::csmByte*)(void*)buffer;
+        LoadUserData(buffer1, size);
+        DeleteBuffer(buffer, path);
     }
 
     // EyeBlinkIds
@@ -211,15 +229,6 @@ void LAppModel::SetupModel(ICubismModelSetting* setting)
         for (csmInt32 i = 0; i < eyeBlinkIdCount; ++i)
         {
             _eyeBlinkIds.PushBack(_modelSetting->GetEyeBlinkParameterId(i));
-        }
-    }
-
-    // LipSyncIds
-    {
-        csmInt32 lipSyncIdCount = _modelSetting->GetLipSyncParameterCount();
-        for (csmInt32 i = 0; i < lipSyncIdCount; ++i)
-        {
-            _lipSyncIds.PushBack(_modelSetting->GetLipSyncParameterId(i));
         }
     }
 
@@ -250,18 +259,23 @@ void LAppModel::PreloadMotionGroup(const csmChar* group)
     {
         //ex) idle_0
         csmString name = Utils::CubismString::GetFormatedString("%s_%d", group, i);
-        csmString path = _modelSetting->GetMotionFileName(group, i);
-        path = _modelHomeDir + path;
+
+        System::String^ path = gcnew System::String(_modelSetting->GetMotionFileName(group, i));
+        System::String^ dir = gcnew System::String(_modelHomeDir.GetRawString());
+        path = dir + path;
 
         if (_debugMode)
         {
-            LAppPal::PrintLog("[APP]load motion: %s => [%s_%d] ", path.GetRawString(), group, i);
+            LAppPal::PrintLog("[APP]load motion: %s => [%s_%d] ", path, group, i);
         }
 
-        csmByte* buffer;
+        System::IntPtr buffer;
+        csmByte* buffer1;
         csmSizeInt size;
-        buffer = CreateBuffer(path.GetRawString(), &size);
-        CubismMotion* tmpMotion = static_cast<CubismMotion*>(LoadMotion(buffer, size, name.GetRawString()));
+
+        buffer = CreateBuffer(path, &size);
+        buffer1 = (csmByte*)(void*)buffer;
+        CubismMotion* tmpMotion = static_cast<CubismMotion*>(LoadMotion(buffer1, size, name.GetRawString()));
 
         csmFloat32 fadeTime = _modelSetting->GetMotionFadeInTimeValue(group, i);
         if (fadeTime >= 0.0f)
@@ -274,7 +288,6 @@ void LAppModel::PreloadMotionGroup(const csmChar* group)
         {
             tmpMotion->SetFadeOutTime(fadeTime);
         }
-        tmpMotion->SetEffectIds(_eyeBlinkIds, _lipSyncIds);
 
         if (_motions[name] != NULL)
         {
@@ -282,7 +295,7 @@ void LAppModel::PreloadMotionGroup(const csmChar* group)
         }
         _motions[name] = tmpMotion;
 
-        DeleteBuffer(buffer, path.GetRawString());
+        DeleteBuffer(buffer, path);
     }
 }
 
@@ -396,22 +409,6 @@ void LAppModel::Update()
         _physics->Evaluate(_model, deltaTimeSeconds);
     }
 
-    // リップシンクの設定
-    if (_lipSync)
-    {
-        // リアルタイムでリップシンクを行う場合、システムから音量を取得して0〜1の範囲で値を入力します。
-        csmFloat32 value = 0.0f;
-
-        // 状態更新/RMS値取得
-        _wavFileHandler.Update(deltaTimeSeconds);
-        value = _wavFileHandler.GetRms();
-
-        for (csmUint32 i = 0; i < _lipSyncIds.GetSize(); ++i)
-        {
-            _model->AddParameterValue(_lipSyncIds[i], value, 0.8f);
-        }
-    }
-
     // ポーズの設定
     if (_pose != NULL)
     {
@@ -437,7 +434,7 @@ CubismMotionQueueEntryHandle LAppModel::StartMotion(const csmChar* group, csmInt
         return InvalidMotionQueueEntryHandleValue;
     }
 
-    const csmString fileName = _modelSetting->GetMotionFileName(group, no);
+    System::String^ path = gcnew System::String(_modelSetting->GetMotionFileName(group, no));
 
     //ex) idle_0
     csmString name = Utils::CubismString::GetFormatedString("%s_%d", group, no);
@@ -446,13 +443,15 @@ CubismMotionQueueEntryHandle LAppModel::StartMotion(const csmChar* group, csmInt
 
     if (motion == NULL)
     {
-        csmString path = fileName;
-        path = _modelHomeDir + path;
+        System::String^ dir = gcnew System::String(_modelHomeDir.GetRawString());
+        path = dir + path;
 
-        csmByte* buffer;
+        System::IntPtr buffer;
+        csmByte* buffer1;
         csmSizeInt size;
-        buffer = CreateBuffer(path.GetRawString(), &size);
-        motion = static_cast<CubismMotion*>(LoadMotion(buffer, size, NULL, onFinishedMotionHandler));
+        buffer = CreateBuffer(path, &size);
+        buffer1 = (csmByte*)(void*)buffer;
+        motion = static_cast<CubismMotion*>(LoadMotion(buffer1, size, NULL, onFinishedMotionHandler));
         csmFloat32 fadeTime = _modelSetting->GetMotionFadeInTimeValue(group, no);
         if (fadeTime >= 0.0f)
         {
@@ -464,23 +463,13 @@ CubismMotionQueueEntryHandle LAppModel::StartMotion(const csmChar* group, csmInt
         {
             motion->SetFadeOutTime(fadeTime);
         }
-        motion->SetEffectIds(_eyeBlinkIds, _lipSyncIds);
         autoDelete = true; // 終了時にメモリから削除
 
-        DeleteBuffer(buffer, path.GetRawString());
+        DeleteBuffer(buffer, path);
     }
     else
     {
         motion->SetFinishedMotionHandler(onFinishedMotionHandler);
-    }
-
-    //voice
-    csmString voice = _modelSetting->GetMotionSoundFileName(group, no);
-    if (strcmp(voice.GetRawString(), "") != 0)
-    {
-        csmString path = voice;
-        path = _modelHomeDir + path;
-        _wavFileHandler.Start(path);
     }
 
     if (_debugMode)

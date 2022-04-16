@@ -6,11 +6,29 @@
     xmlns:local="clr-namespace:Live2d_For_WPF"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
-    Width="800"
+    Width="1200"
     Height="800"
     Loaded="Window_Loaded"
     mc:Ignorable="d">
     <Grid>
-        <WindowsFormsHost Name="Host" Margin="0,0,0,0" />
+        <WindowsFormsHost Name="Host" Margin="0,0,400,0" />
+        <Button
+            Margin="0,10,10,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Click="Button_Click"
+            Content="变换位置" />
+        <Button
+            Margin="0,34,10,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Click="Button_Click_1"
+            Content="恢复位置" />
+        <Button
+            Margin="0,58,10,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Click="Button_Click_2"
+            Content="加载模型" />
     </Grid>
 </Window>

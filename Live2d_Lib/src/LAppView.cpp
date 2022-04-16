@@ -203,6 +203,26 @@ float LAppView::TransformScreenY(float deviceY) const
     return _deviceToScreen->TransformY(deviceY);
 }
 
+void LAppView::ViewPosX(float value)
+{
+    _viewMatrix->TranslateX(value);
+}
+
+void LAppView::ViewPosY(float value)
+{
+    _viewMatrix->TranslateY(value);
+}
+
+void LAppView::ScaleView(float value)
+{
+    _viewMatrix->Scale(value, value);
+}
+
+void LAppView::ScaleView(float x, float y)
+{
+    _viewMatrix->Scale(x, y);
+}
+
 void LAppView::PreModelDraw(LAppModel& refModel)
 {
     // 別のレンダリングターゲットへ向けて描画する場合の使用するフレームバッファ

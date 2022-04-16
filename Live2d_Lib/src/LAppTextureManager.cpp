@@ -12,6 +12,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #include "LAppPal.hpp"
+#include "Live2dApp.h"
 
 LAppTextureManager::LAppTextureManager()
 {
@@ -37,13 +38,15 @@ LAppTextureManager::TextureInfo* LAppTextureManager::CreateTextureFromPngFile(st
     int width, height, channels;
     unsigned int size;
     unsigned char* png;
-    unsigned char* address;
+    System::IntPtr address;
+    unsigned char* address1;
 
-    address = LAppPal::LoadFileAsBytes(fileName, &size);
+    address = LoadFileDO(gcnew System::String(fileName.c_str()), &size);
+    address1 = (unsigned char*)(void*)address;
 
     // png情報を取得する
     png = stbi_load_from_memory(
-        address,
+        address1,
         static_cast<int>(size),
         &width,
         &height,

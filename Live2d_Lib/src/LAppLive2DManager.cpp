@@ -158,7 +158,7 @@ void LAppLive2DManager::OnUpdate() const
     }
 }
 
-void LAppLive2DManager::ChangeScene(Csm::csmString dir, Csm::csmString name)
+void LAppLive2DManager::ChangeScene(System::String^ dir, System::String^ name)
 {
     if (DebugLogEnable)
     {
@@ -167,7 +167,7 @@ void LAppLive2DManager::ChangeScene(Csm::csmString dir, Csm::csmString name)
 
     ReleaseAllModel();
     _models.PushBack(new LAppModel());
-    _models[0]->LoadAssets(dir.GetRawString(), name.GetRawString());
+    _models[0]->LoadAssets(dir, name);
 
     /*
      * モデル半透明表示を行うサンプルを提示する。

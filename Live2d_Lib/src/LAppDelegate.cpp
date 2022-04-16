@@ -66,7 +66,6 @@ bool LAppDelegate::Initialize(int width, int height)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // ウィンドウサイズ記憶
-    //glfwGetWindowSize(LAppDelegate::GetInstance()->GetWindow(), &width, &height);
     _windowWidth = width;
     _windowHeight = height;
 
@@ -119,9 +118,6 @@ void LAppDelegate::Run(int width, int height, double time)
 
     //描画更新
     _view->Render();
-
-    // Poll for and process events
-    //glfwPollEvents();
 }
 
 LAppDelegate::LAppDelegate():

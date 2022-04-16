@@ -76,7 +76,7 @@ public:
     * @brief   シーンを切り替える<br>
     *           サンプルアプリケーションではモデルセットの切り替えを行う。
     */
-    void ChangeScene(Csm::csmString dir, Csm::csmString name);
+    void ChangeScene(System::String^ dir, System::String^ name);
 
     /**
      * @brief   モデル個数を得る

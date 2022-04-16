@@ -19,17 +19,6 @@
 class LAppPal
 {
 public:
-    /**
-    * @brief ファイルをバイトデータとして読み込む
-    *
-    * ファイルをバイトデータとして読み込む
-    *
-    * @param[in]   filePath    読み込み対象ファイルのパス
-    * @param[out]  outSize     ファイルサイズ
-    * @return                  バイトデータ
-    */
-    static Csm::csmByte* LoadFileAsBytes(const std::string filePath, Csm::csmSizeInt* outSize);
-
 
     /**
     * @brief バイトデータを解放する
@@ -38,7 +27,7 @@ public:
     *
     * @param[in]   byteData    解放したいバイトデータ
     */
-    static void ReleaseBytes(Csm::csmByte* byteData);
+    static void ReleaseBytes(System::IntPtr byteData);
 
     /**
     * @biref   デルタ時間（前回フレームとの差分）を取得する

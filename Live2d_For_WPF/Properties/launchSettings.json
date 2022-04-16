@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Live2d_For_WPF": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

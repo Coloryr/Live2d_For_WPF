@@ -9,12 +9,110 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\expressions\F01.exp3.json" />
+    <None Remove="Data\expressions\F02.exp3.json" />
+    <None Remove="Data\expressions\F03.exp3.json" />
+    <None Remove="Data\expressions\F04.exp3.json" />
+    <None Remove="Data\expressions\F05.exp3.json" />
+    <None Remove="Data\expressions\F06.exp3.json" />
+    <None Remove="Data\expressions\F07.exp3.json" />
+    <None Remove="Data\expressions\F08.exp3.json" />
+    <None Remove="Data\Haru.2048\texture_00.png" />
+    <None Remove="Data\Haru.2048\texture_01.png" />
+    <None Remove="Data\Haru.cdi3.json" />
+    <None Remove="Data\Haru.moc3" />
+    <None Remove="Data\Haru.model3.json" />
+    <None Remove="Data\Haru.physics3.json" />
+    <None Remove="Data\Haru.pose3.json" />
+    <None Remove="Data\Haru.userdata3.json" />
+    <None Remove="Data\motions\haru_g_idle.motion3.json" />
+    <None Remove="Data\motions\haru_g_m01.motion3.json" />
+    <None Remove="Data\motions\haru_g_m02.motion3.json" />
+    <None Remove="Data\motions\haru_g_m03.motion3.json" />
+    <None Remove="Data\motions\haru_g_m04.motion3.json" />
+    <None Remove="Data\motions\haru_g_m05.motion3.json" />
+    <None Remove="Data\motions\haru_g_m06.motion3.json" />
+    <None Remove="Data\motions\haru_g_m07.motion3.json" />
+    <None Remove="Data\motions\haru_g_m08.motion3.json" />
+    <None Remove="Data\motions\haru_g_m09.motion3.json" />
+    <None Remove="Data\motions\haru_g_m10.motion3.json" />
+    <None Remove="Data\motions\haru_g_m11.motion3.json" />
+    <None Remove="Data\motions\haru_g_m12.motion3.json" />
+    <None Remove="Data\motions\haru_g_m13.motion3.json" />
+    <None Remove="Data\motions\haru_g_m14.motion3.json" />
+    <None Remove="Data\motions\haru_g_m15.motion3.json" />
+    <None Remove="Data\motions\haru_g_m16.motion3.json" />
+    <None Remove="Data\motions\haru_g_m17.motion3.json" />
+    <None Remove="Data\motions\haru_g_m18.motion3.json" />
+    <None Remove="Data\motions\haru_g_m19.motion3.json" />
+    <None Remove="Data\motions\haru_g_m20.motion3.json" />
+    <None Remove="Data\motions\haru_g_m21.motion3.json" />
+    <None Remove="Data\motions\haru_g_m22.motion3.json" />
+    <None Remove="Data\motions\haru_g_m23.motion3.json" />
+    <None Remove="Data\motions\haru_g_m24.motion3.json" />
+    <None Remove="Data\motions\haru_g_m25.motion3.json" />
+    <None Remove="Data\motions\haru_g_m26.motion3.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Data\expressions\F06.exp3.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Data\expressions\F04.exp3.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="OpenTK" Version="4.7.1" />
     <PackageReference Include="OpenTK.WinForms" Version="4.0.0-pre.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Live2d_Lib\Live2d_Lib.vcxproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Data\expressions\F01.exp3.json" />
+    <Resource Include="Data\expressions\F02.exp3.json" />
+    <Resource Include="Data\expressions\F03.exp3.json" />
+    <Resource Include="Data\expressions\F05.exp3.json" />
+    <Resource Include="Data\expressions\F07.exp3.json" />
+    <Resource Include="Data\expressions\F08.exp3.json" />
+    <Resource Include="Data\Haru.2048\texture_00.png" />
+    <Resource Include="Data\Haru.2048\texture_01.png" />
+    <Resource Include="Data\Haru.cdi3.json" />
+    <Resource Include="Data\Haru.moc3" />
+    <Resource Include="Data\Haru.model3.json" />
+    <Resource Include="Data\Haru.physics3.json" />
+    <Resource Include="Data\Haru.pose3.json" />
+    <Resource Include="Data\Haru.userdata3.json" />
+    <Resource Include="Data\motions\haru_g_idle.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m01.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m02.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m03.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m04.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m05.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m06.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m07.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m08.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m09.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m10.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m11.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m12.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m13.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m14.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m15.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m16.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m17.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m18.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m19.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m20.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m21.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m22.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m23.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m24.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m25.motion3.json" />
+    <Resource Include="Data\motions\haru_g_m26.motion3.json" />
   </ItemGroup>
 
 </Project>

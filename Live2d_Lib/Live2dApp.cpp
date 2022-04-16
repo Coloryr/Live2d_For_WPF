@@ -2,27 +2,24 @@
 #include <string>
 #include <Live2dApp.h>
 #include <LAppLive2DManager.hpp>
+#include <LAppView.hpp>
 
 using namespace System::Runtime::InteropServices;
 
 typedef System::IntPtr(__stdcall *LoadFileCall)(System::String^ filePath, unsigned int% outSize);
 LoadFileCall _loadfile;
 
-Csm::csmByte* LoadFileDO(std::string filePath, Csm::csmSizeInt* outSize)
-{
-	System::IntPtr temp = _loadfile(gcnew System::String(filePath.c_str()), *outSize);
-	return (Csm::csmByte*)(void*)temp;
-}
+
 
 public ref class Live2dApp
 {
 public:
 	delegate System::IntPtr(LoadFile)(System::String^ filePath, unsigned int% outSize);
+	static LoadFile^ _loadfile;
 
 	void SetCall(LoadFile^ loadfile)
 	{
-		System::IntPtr ip = Marshal::GetFunctionPointerForDelegate(loadfile);
-		_loadfile = (LoadFileCall)(ip.ToPointer());
+		_loadfile = loadfile;
 	}
 	bool Start(int width, int height)
 	{
@@ -53,10 +50,35 @@ public:
 	void LoadModel(System::String^ dir, System::String^ name)
 	{
 		name += ".model3.json";
-		char* str1 = (char*)(void*)Marshal::StringToHGlobalAnsi(dir);
-		char* str2 = (char*)(void*)Marshal::StringToHGlobalAnsi(name);
-		LAppLive2DManager::GetInstance()->ChangeScene(Csm::csmString(str1), Csm::csmString(str2));
-		Marshal::FreeHGlobal((System::IntPtr)str1);
-		Marshal::FreeHGlobal((System::IntPtr)str2);
+		LAppLive2DManager::GetInstance()->ChangeScene(dir, name);
+	}
+
+	void SetPosX(float value) 
+	{
+		LAppView*  view = LAppDelegate::GetInstance()->GetView();
+		view->ViewPosX(value);
+	}
+
+	void SetPosY(float value)
+	{
+		LAppView* view = LAppDelegate::GetInstance()->GetView();
+		view->ViewPosY(value);
+	}
+
+	void SetScale(float value)
+	{
+		LAppView* view = LAppDelegate::GetInstance()->GetView();
+		view->ScaleView(value);
+	}
+
+	void SetScale(float x, float y)
+	{
+		LAppView* view = LAppDelegate::GetInstance()->GetView();
+		view->ScaleView(x, y);
 	}
 };
+
+System::IntPtr LoadFileDO(System::String^ filePath, Csm::csmSizeInt* outSize)
+{
+	return Live2dApp::_loadfile(filePath, *outSize);
+}

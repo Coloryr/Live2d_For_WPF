@@ -20,7 +20,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using System.Windows.Resources;
 using System.Windows.Shapes;
+using Application = System.Windows.Application;
 
 namespace Live2d_For_WPF
 {
@@ -42,11 +44,25 @@ namespace Live2d_For_WPF
 
         private IntPtr LoadFile(string path, ref uint size) 
         {
-            var temp = File.ReadAllBytes(path);
-            IntPtr inputBuffer = Marshal.AllocHGlobal(temp.Length * sizeof(byte));
-            Marshal.Copy(temp, 0, inputBuffer, temp.Length);
-            size = (uint)temp.Length;
-            return inputBuffer;
+            if (path.StartsWith("/Data"))
+            {
+                Uri uri = new(path, UriKind.Relative);
+                StreamResourceInfo info = Application.GetResourceStream(uri);
+                var temp = new byte[info.Stream.Length];
+                info.Stream.Read(temp, 0, temp.Length);
+                IntPtr inputBuffer = Marshal.AllocHGlobal(temp.Length * sizeof(byte));
+                Marshal.Copy(temp, 0, inputBuffer, temp.Length);
+                size = (uint)temp.Length;
+                return inputBuffer;
+            }
+            else
+            {
+                var temp = File.ReadAllBytes(path);
+                IntPtr inputBuffer = Marshal.AllocHGlobal(temp.Length * sizeof(byte));
+                Marshal.Copy(temp, 0, inputBuffer, temp.Length);
+                size = (uint)temp.Length;
+                return inputBuffer;
+            }
         }
 
         private void WindowsFormsHost_Initialized(object sender, EventArgs e)
@@ -71,6 +87,9 @@ namespace Live2d_For_WPF
             };
             _timer.Interval = 10;   // 1000 ms per sec / 10 ms per frame = 100 FPS
             _timer.Start();
+
+            live2d.Start(glControl.ClientSize.Width, glControl.ClientSize.Height);
+            live2d.LoadModel("/Data/", "Haru");
         }
 
         private void GlControl_MouseMove(object? sender, System.Windows.Forms.MouseEventArgs e)
@@ -94,16 +113,7 @@ namespace Live2d_For_WPF
 
         private void glControl_Resize(object? sender, EventArgs e)
         {
-            glControl.MakeCurrent();
-
-            if (glControl.ClientSize.Height == 0)
-                glControl.ClientSize = new System.Drawing.Size(glControl.ClientSize.Width, 1);
-
-            GL.Viewport(0, 0, glControl.ClientSize.Width, glControl.ClientSize.Height);
-            if (glControl.Width == 0)
-                return;
-            live2d.Start(glControl.Width, glControl.Height);
-            live2d.LoadModel(AppContext.BaseDirectory + "Resources/Haru/", "Haru");
+            
         }
 
         private void glControl_Paint(object sender, PaintEventArgs e)
@@ -134,6 +144,37 @@ namespace Live2d_For_WPF
 
             glControl.Load += GlControl_Load;
             Host.Child = glControl;//将控件放在WindowsFormsHost控件中
+            
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            live2d.SetScale(0.5f);
+            live2d.SetPosX(0.3f);
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            live2d.SetScale(1f);
+            live2d.SetPosX(0f);
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog file = new()
+            {
+                Filter = "模型文件|*.model3.json",
+                RestoreDirectory = true,
+                FilterIndex = 1
+            };
+
+            if (file.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string filename = file.FileName;
+                FileInfo info = new(filename);
+
+                live2d.LoadModel(info.DirectoryName + "/", info.Name.Replace(".model3.json", ""));
+            }
         }
     }
 }

@@ -96,7 +96,7 @@ Csm::csmBool LAppWavFileHandler::LoadWavFile(const Csm::csmString& filePath)
     }
 
     // ファイルロード
-    _byteReader._fileByte = LAppPal::LoadFileAsBytes(filePath.GetRawString(), &(_byteReader._fileSize));
+    _byteReader._fileByte = (Csm::csmByte*)(void*)LAppPal::LoadFileAsBytes(filePath.GetRawString(), &(_byteReader._fileSize));
     _byteReader._readOffset = 0;
 
     // ファイルロードに失敗しているか、先頭のシグネチャ"RIFF"を入れるサイズもない場合は失敗

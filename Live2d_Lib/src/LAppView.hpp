@@ -145,6 +145,11 @@ public:
      */
     void SetRenderTargetClearColor(float r, float g, float b);
 
+    void ScaleView(float value);
+    void ScaleView(float x, float y);
+    void ViewPosX(float value);
+    void ViewPosY(float value);
+
 private:
     TouchManager* _touchManager;                 ///< タッチマネージャー
     Csm::CubismMatrix44* _deviceToScreen;    ///< デバイスからスクリーンへの行列

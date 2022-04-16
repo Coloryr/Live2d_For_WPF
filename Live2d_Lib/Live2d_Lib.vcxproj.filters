@@ -30,9 +30,6 @@
     <ClCompile Include="src\LAppView.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\LAppWavFileHandler.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\TouchManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -66,9 +63,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\LAppView.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\LAppWavFileHandler.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\TouchManager.hpp">

@@ -25,17 +25,9 @@ double LAppPal::s_currentFrame = 0.0;
 double LAppPal::s_lastFrame = 0.0;
 double LAppPal::s_deltaTime = 0.0;
 
-csmByte* LAppPal::LoadFileAsBytes(const string filePath, csmSizeInt* outSize)
+void LAppPal::ReleaseBytes(System::IntPtr byteData)
 {
-    //filePath;//
-    const char* path = filePath.c_str();
-
-    return LoadFileDO(filePath, outSize);
-}
-
-void LAppPal::ReleaseBytes(csmByte* byteData)
-{
-    System::Runtime::InteropServices::Marshal::FreeHGlobal((System::IntPtr)byteData);
+    System::Runtime::InteropServices::Marshal::FreeHGlobal(byteData);
 }
 
 csmFloat32  LAppPal::GetDeltaTime()
