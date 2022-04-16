@@ -65,7 +65,13 @@ public:
 public ref class Part
 {
 public :
+	/// <summary>
+	/// ID
+	/// </summary>
 	System::String^ Id;
+	/// <summary>
+	/// 透明度
+	/// </summary>
 	float Opacitie;
 
 	System::String^ ToString() override
@@ -100,28 +106,47 @@ public:
 		_loaddone = loaddone;
 		_update = update;
 	}
-
+	/// <summary>
+	/// 初始化
+	/// </summary>
 	bool Start(int width, int height)
 	{
 		return LAppDelegate::GetInstance()->Initialize(width, height) != GL_FALSE;
 	}
+	/// <summary>
+	/// 渲染一帧
+	/// </summary>
 	void Tick(int width, int height, double time)
 	{
 		LAppDelegate::GetInstance()->Run(width, height, time);
 	}
+	/// <summary>
+	/// 关闭
+	/// </summary>
 	void Close()
 	{
 		LAppDelegate::GetInstance()->Release();
 		LAppDelegate::ReleaseInstance();
 	}
+	/// <summary>
+	/// 鼠标事件
+	/// 0 按下
+	/// 1 抬起
+	/// </summary>
 	void MouseEvent(int action)
 	{
 		LAppDelegate::GetInstance()->OnMouseCallBack(action);
 	}
+	/// <summary>
+	/// 鼠标移动
+	/// </summary>
 	void MouseMove(double x, double y)
 	{
 		LAppDelegate::GetInstance()->OnMouseCallBack(x, y);
 	}
+	/// <summary>
+	/// 加载模型
+	/// </summary>
 	void LoadModel(System::String^ dir, System::String^ name)
 	{
 		LAppLive2DManager::GetInstance()->IsLoad = true;
@@ -137,26 +162,41 @@ public:
 
 		LAppLive2DManager::GetInstance()->IsLoad = false;
 	}
+	/// <summary>
+	/// 设置渲染位置X
+	/// </summary>
 	void SetPosX(float value)
 	{
 		LAppView* view = LAppDelegate::GetInstance()->GetView();
 		view->ViewPosX(value);
 	}
+	/// <summary>
+	/// 设置渲染位置Y
+	/// </summary>
 	void SetPosY(float value)
 	{
 		LAppView* view = LAppDelegate::GetInstance()->GetView();
 		view->ViewPosY(value);
 	}
+	/// <summary>
+	/// 设置渲染缩放
+	/// </summary>
 	void SetScale(float value)
 	{
 		LAppView* view = LAppDelegate::GetInstance()->GetView();
 		view->ScaleView(value);
 	}
+	/// <summary>
+	/// 设置渲染缩放
+	/// </summary>
 	void SetScale(float x, float y)
 	{
 		LAppView* view = LAppDelegate::GetInstance()->GetView();
 		view->ScaleView(x, y);
 	}
+	/// <summary>
+	/// 获得所有表情
+	/// </summary>
 	array<System::String^>^ GetExpressions()
 	{
 		if (LAppLive2DManager::GetInstance()->GetModelNum() == 0)
@@ -174,6 +214,9 @@ public:
 
 		return list1;
 	}
+	/// <summary>
+	/// 获得所有动作
+	/// </summary>
 	array<Motion^>^ GetMotions()
 	{
 		if (LAppLive2DManager::GetInstance()->GetModelNum() == 0)
@@ -195,6 +238,9 @@ public:
 
 		return list1;
 	}
+	/// <summary>
+	/// 开始表情
+	/// </summary>
 	bool StartExpression(int index)
 	{
 		if (LAppLive2DManager::GetInstance()->GetModelNum() == 0)
@@ -221,21 +267,27 @@ public:
 
 		return true;
 	}
-	bool StartMotion(System::String^ group, int no, int priority)
+	/// <summary>
+	/// 开始动作
+	/// </summary>
+	bool StartMotion(Motion^ motion, int priority)
 	{
 		if (LAppLive2DManager::GetInstance()->GetModelNum() == 0)
 			return false;
 		LAppModel* model = LAppLive2DManager::GetInstance()->GetModel(0);
 		if (model == nullptr)
 			return false;
-		char* str1 = (char*)(void*)Marshal::StringToHGlobalAnsi(group);
+		char* str1 = (char*)(void*)Marshal::StringToHGlobalAnsi(motion->Group);
 
-		model->StartMotion(str1, no, priority);
+		model->StartMotion(str1, motion->Number, priority);
 
 		Marshal::FreeHGlobal((System::IntPtr)str1);
 
 		return true;
 	}
+	/// <summary>
+	/// 是否启用随机动作
+	/// </summary>
 	void SetRandomMotion(bool value)
 	{
 		if (LAppLive2DManager::GetInstance()->GetModelNum() == 0)
@@ -326,6 +378,9 @@ public:
 		Marshal::FreeHGlobal((System::IntPtr)MotionGroupTapBody);
 		MotionGroupTapBody = (char*)(void*)Marshal::StringToHGlobalAnsi(name);
 	}
+	/// <summary>
+	/// 获取所有参数
+	/// </summary>
 	array<Parameter^>^ GetParameters()
 	{
 		if (LAppLive2DManager::GetInstance()->GetModelNum() == 0)
@@ -354,6 +409,9 @@ public:
 
 		return list;
 	}
+	/// <summary>
+	/// 获取所有组件
+	/// </summary>
 	array<Part^>^ GetParts()
 	{
 		if (LAppLive2DManager::GetInstance()->GetModelNum() == 0)
@@ -379,6 +437,9 @@ public:
 
 		return list;
 	}
+	/// <summary>
+	/// 给组件添加值
+	/// </summary>
 	bool AddParameterValue(System::String^ name, float value)
 	{
 		if (LAppLive2DManager::GetInstance()->GetModelNum() == 0)
@@ -408,7 +469,9 @@ public:
 		Marshal::FreeHGlobal((System::IntPtr)str1);
 		return res;
 	}
-
+	/// <summary>
+	/// 设置组件透明度
+	/// </summary>
 	bool SetPartOpacitie(System::String^ name, float value)
 	{
 		if (LAppLive2DManager::GetInstance()->GetModelNum() == 0)
@@ -438,6 +501,9 @@ public:
 		Marshal::FreeHGlobal((System::IntPtr)str1);
 		return res;
 	}
+	/// <summary>
+	/// 是否自定义组件值
+	/// </summary>
 	void SetCustomValue(bool value)
 	{
 		if (LAppLive2DManager::GetInstance()->GetModelNum() == 0)

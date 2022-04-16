@@ -207,7 +207,7 @@ namespace Live2d_For_WPF
                 return;
 
             Motion item = Motions[random.Next(0, Motions.Length)];
-            live2d.StartMotion(item.Group, item.Number, 3);
+            live2d.StartMotion(item, 3);
         }
 
         private void Button_Click_6(object sender, RoutedEventArgs e)
