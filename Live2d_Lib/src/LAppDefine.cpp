@@ -27,14 +27,6 @@ namespace LAppDefine {
     const csmFloat32 ViewLogicalMaxBottom = -2.0f;
     const csmFloat32 ViewLogicalMaxTop = 2.0f;
 
-    // 外部定義ファイル(json)と合わせる
-    const csmChar* MotionGroupIdle = "Idle"; // アイドリング
-    const csmChar* MotionGroupTapBody = "TapBody"; // 体をタップしたとき
-
-    // 外部定義ファイル(json)と合わせる
-    const csmChar* HitAreaNameHead = "Head";
-    const csmChar* HitAreaNameBody = "Body";
-
     // モーションの優先度定数
     const csmInt32 PriorityNone = 0;
     const csmInt32 PriorityIdle = 1;

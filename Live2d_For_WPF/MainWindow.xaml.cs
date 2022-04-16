@@ -38,8 +38,17 @@ namespace Live2d_For_WPF
         {
             InitializeComponent();
 
-            live2d = new();
-            live2d.SetCall(LoadFile);
+            live2d = new(LoadFile, LoadDone);
+        }
+
+        private void LoadDone(string name)
+        {
+            if (name == "rice_pro_t03.model3.json")
+            {
+                live2d.SetIdParamAngleX("ParamAngleX");
+                live2d.SetMotionGroupTapBody("Tap@Body");
+            }
+            Button_Click_3(null, null);
         }
 
         private IntPtr LoadFile(string path, ref uint size) 
@@ -65,16 +74,8 @@ namespace Live2d_For_WPF
             }
         }
 
-        private void WindowsFormsHost_Initialized(object sender, EventArgs e)
-        {
-            
-        }
-
         private void GlControl_Load(object? sender, EventArgs e)
         {
-            glControl_Resize(glControl, EventArgs.Empty);
-
-            glControl.Resize += glControl_Resize;
             glControl.Paint += glControl_Paint;
             glControl.MouseDown += GlControl_MouseDown;
             glControl.MouseUp += GlControl_MouseUp;
@@ -109,11 +110,6 @@ namespace Live2d_For_WPF
             if (e.Button != MouseButtons.Left)
                 return;
             live2d.MouseEvent(0);
-        }
-
-        private void glControl_Resize(object? sender, EventArgs e)
-        {
-            
         }
 
         private void glControl_Paint(object sender, PaintEventArgs e)
@@ -175,6 +171,49 @@ namespace Live2d_For_WPF
 
                 live2d.LoadModel(info.DirectoryName + "/", info.Name.Replace(".model3.json", ""));
             }
+        }
+
+        record Motion 
+        {
+            public string group;
+            public int no;
+        }
+
+        private string[] Expressions;
+        private Motion[] Motions;
+        private Random random = new();
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            Expressions = live2d.GetExpressions();
+            var temp = live2d.GetMotions();
+            Motions = new Motion[temp.Length];
+            for(int i = 0;i < temp.Length;i++)
+            {
+                var item = temp[i];
+                var temp1 = item.Split("_");
+                Motions[i] = new()
+                {
+                    group = temp1[0],
+                    no = int.Parse(temp1[1])
+                };
+            }
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            if (Expressions == null)
+                return;
+
+            live2d.StartExpression(random.Next(0, Expressions.Length));
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            if (Motions == null)
+                return;
+
+            Motion item = Motions[random.Next(0, Motions.Length)];
+            live2d.StartMotion(item.group, item.no, 3);
         }
     }
 }

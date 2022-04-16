@@ -30,5 +30,23 @@
             VerticalAlignment="Top"
             Click="Button_Click_2"
             Content="加载模型" />
+        <Button
+            Margin="0,82,10,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Click="Button_Click_3"
+            Content="获取信息" />
+        <Button
+            Margin="0,106,10,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Click="Button_Click_4"
+            Content="随机表情" />
+        <Button
+            Margin="0,130,10,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Click="Button_Click_5"
+            Content="随机动作" />
     </Grid>
 </Window>

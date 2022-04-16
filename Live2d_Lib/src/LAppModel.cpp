@@ -50,6 +50,7 @@ namespace {
 LAppModel::LAppModel()
     : CubismUserModel()
     , _modelSetting(NULL)
+    , NeedRandom(true)
     , _userTimeSeconds(0.0f)
 {
     if (DebugLogEnable)
@@ -78,6 +79,43 @@ LAppModel::~LAppModel()
         ReleaseMotionGroup(group);
     }
     delete(_modelSetting);
+}
+
+void LAppModel::SetIdParamAngleX(System::String^ name)
+{
+    char* str1 = (char*)(void*)Marshal::StringToHGlobalAnsi(name);
+    _idParamAngleX = CubismFramework::GetIdManager()->GetId(str1);
+    Marshal::FreeHGlobal((System::IntPtr)str1);
+}
+void LAppModel::SetIdParamAngleY(System::String^ name)
+{
+    char* str1 = (char*)(void*)Marshal::StringToHGlobalAnsi(name);
+    _idParamAngleY = CubismFramework::GetIdManager()->GetId(str1);
+    Marshal::FreeHGlobal((System::IntPtr)str1);
+}
+void LAppModel::SetIdParamAngleZ(System::String^ name)
+{
+    char* str1 = (char*)(void*)Marshal::StringToHGlobalAnsi(name);
+    _idParamAngleZ = CubismFramework::GetIdManager()->GetId(str1);
+    Marshal::FreeHGlobal((System::IntPtr)str1);
+}
+void LAppModel::SetIdParamBodyAngleX(System::String^ name)
+{
+    char* str1 = (char*)(void*)Marshal::StringToHGlobalAnsi(name);
+    _idParamBodyAngleX = CubismFramework::GetIdManager()->GetId(str1);
+    Marshal::FreeHGlobal((System::IntPtr)str1);
+}
+void LAppModel::SetIdParamEyeBallX(System::String^ name)
+{
+    char* str1 = (char*)(void*)Marshal::StringToHGlobalAnsi(name);
+    _idParamEyeBallX = CubismFramework::GetIdManager()->GetId(str1);
+    Marshal::FreeHGlobal((System::IntPtr)str1);
+}
+void LAppModel::SetIdParamEyeBallY(System::String^ name)
+{
+    char* str1 = (char*)(void*)Marshal::StringToHGlobalAnsi(name);
+    _idParamEyeBallY = CubismFramework::GetIdManager()->GetId(str1);
+    Marshal::FreeHGlobal((System::IntPtr)str1);
 }
 
 void LAppModel::LoadAssets(System::String^ dir, System::String^ fileName)
@@ -357,7 +395,7 @@ void LAppModel::Update()
 
     //-----------------------------------------------------------------
     _model->LoadParameters(); // 前回セーブされた状態をロード
-    if (_motionManager->IsFinished())
+    if (_motionManager->IsFinished() && NeedRandom)
     {
         // モーションの再生がない場合、待機モーションの中からランダムで再生する
         StartRandomMotion(MotionGroupIdle, PriorityIdle);
@@ -525,7 +563,8 @@ csmBool LAppModel::HitTest(const csmChar* hitAreaName, csmFloat32 x, csmFloat32 
     const csmInt32 count = _modelSetting->GetHitAreasCount();
     for (csmInt32 i = 0; i < count; i++)
     {
-        if (strcmp(_modelSetting->GetHitAreaName(i), hitAreaName) == 0)
+        const char* temp = _modelSetting->GetHitAreaName(i);
+        if (strcmp(temp, hitAreaName) == 0)
         {
             const CubismIdHandle drawID = _modelSetting->GetHitAreaId(i);
             return IsHit(drawID, x, y);

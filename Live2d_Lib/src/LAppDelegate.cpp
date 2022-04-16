@@ -96,13 +96,11 @@ void LAppDelegate::Run(int width, int height, double time)
 {
     if ((_windowWidth != width || _windowHeight != height) && width > 0 && height > 0)
     {
-        //AppViewの初期化
-        _view->Initialize();
-        // スプライトサイズを再設定
-        _view->ResizeSprite();
         // サイズを保存しておく
         _windowWidth = width;
         _windowHeight = height;
+        //AppViewの初期化
+        _view->Initialize();
 
         // ビューポート変更
         glViewport(0, 0, width, height);

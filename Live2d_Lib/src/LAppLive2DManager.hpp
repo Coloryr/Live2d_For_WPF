@@ -89,6 +89,8 @@ public:
      */
     void SetViewMatrix(Live2D::Cubism::Framework::CubismMatrix44* m);
 
+    bool IsLoad;
+
 private:
     /**
     * @brief  コンストラクタ

@@ -112,6 +112,25 @@ public:
      */
     Csm::Rendering::CubismOffscreenFrame_OpenGLES2& GetRenderBuffer();
 
+    Csm::csmMap<Csm::csmString, Csm::ACubismMotion*>* GetExpressions()
+    {
+        return &_expressions;
+    }
+
+    Csm::csmMap<Csm::csmString, Csm::ACubismMotion*>* GetMotions()
+    {
+        return &_motions;
+    }
+
+    bool NeedRandom;
+
+    void SetIdParamAngleX(System::String^ name);
+    void SetIdParamAngleY(System::String^ name);
+    void SetIdParamAngleZ(System::String^ name);
+    void SetIdParamBodyAngleX(System::String^ name);
+    void SetIdParamEyeBallX(System::String^ name);
+    void SetIdParamEyeBallY(System::String^ name);
+
 protected:
     /**
      *  @brief  モデルを描画する処理。モデルを描画する空間のView-Projection行列を渡す。

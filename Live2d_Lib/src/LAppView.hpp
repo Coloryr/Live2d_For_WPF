@@ -60,11 +60,6 @@ public:
     void InitializeSprite();
 
     /**
-    * @brief スプライト系のサイズ再設定
-    */
-    void ResizeSprite();
-
-    /**
     * @brief タッチされたときに呼ばれる。
     *
     * @param[in]       pointX            スクリーンX座標

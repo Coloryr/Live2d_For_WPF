@@ -94,11 +94,19 @@ void LAppView::Initialize()
         ViewLogicalMaxBottom,
         ViewLogicalMaxTop
     );
+
+    float x = width * 0.5f;
+    float y = height * 0.5f;
+
+    // 画面全体を覆うサイズ
+    _renderSprite = new LAppSprite(x, y, static_cast<float>(width), static_cast<float>(height), 0, _programId);
 }
 
 void LAppView::Render()
 {
     LAppLive2DManager* Live2DManager = LAppLive2DManager::GetInstance();
+    if (Live2DManager->IsLoad)
+        return;
 
     Live2DManager->SetViewMatrix(_viewMatrix);
 
@@ -133,18 +141,6 @@ void LAppView::Render()
 void LAppView::InitializeSprite()
 {
     _programId = LAppDelegate::GetInstance()->CreateShader();
-
-    int width, height;
-    width = LAppDelegate::GetInstance()->GetWidth();
-    height = LAppDelegate::GetInstance()->GetHeight();
-
-    LAppTextureManager* textureManager = LAppDelegate::GetInstance()->GetTextureManager();
-
-    float x = width * 0.5f;
-    float y = height * 0.5f;
-
-    // 画面全体を覆うサイズ
-    _renderSprite = new LAppSprite(x, y, static_cast<float>(width), static_cast<float>(height), 0, _programId);
 }
 
 void LAppView::OnTouchesBegan(float px, float py) const
@@ -169,7 +165,6 @@ void LAppView::OnTouchesEnded(float px, float py) const
     LAppLive2DManager* live2DManager = LAppLive2DManager::GetInstance();
     live2DManager->OnDrag(0.0f, 0.0f);
     {
-
         // シングルタップ
         float x = _deviceToScreen->TransformX(_touchManager->GetX()); // 論理座標変換した座標を取得。
         float y = _deviceToScreen->TransformY(_touchManager->GetY()); // 論理座標変換した座標を取得。
@@ -310,23 +305,4 @@ float LAppView::GetSpriteAlpha(int assign) const
     }
 
     return alpha;
-}
-
-void LAppView::ResizeSprite()
-{
-    LAppTextureManager* textureManager = LAppDelegate::GetInstance()->GetTextureManager();
-    if (!textureManager)
-    {
-        return;
-    }
-
-    // 描画領域サイズ
-    int width, height;
-    width = LAppDelegate::GetInstance()->GetWidth();
-    height = LAppDelegate::GetInstance()->GetHeight();
-
-    float x = 0.0f;
-    float y = 0.0f;
-    float fWidth = 0.0f;
-    float fHeight = 0.0f;
 }

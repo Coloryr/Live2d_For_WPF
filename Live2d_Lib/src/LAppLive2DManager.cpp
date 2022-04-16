@@ -14,6 +14,7 @@
 #include "LAppDelegate.hpp"
 #include "LAppModel.hpp"
 #include "LAppView.hpp"
+#include "Live2dApp.h"
 
 using namespace Csm;
 using namespace LAppDefine;
@@ -199,6 +200,8 @@ void LAppLive2DManager::ChangeScene(System::String^ dir, System::String^ name)
         float clearColor[3] = { 1.0f, 1.0f, 1.0f };
         LAppDelegate::GetInstance()->GetView()->SetRenderTargetClearColor(clearColor[0], clearColor[1], clearColor[2]);
     }
+
+    LoadDone(name);
 }
 
 csmUint32 LAppLive2DManager::GetModelNum() const
