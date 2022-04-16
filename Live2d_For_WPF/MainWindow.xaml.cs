@@ -38,7 +38,12 @@ namespace Live2d_For_WPF
         {
             InitializeComponent();
 
-            live2d = new(LoadFile, LoadDone);
+            live2d = new(LoadFile, LoadDone, Update);
+        }
+
+        private void Update() 
+        {
+            live2d.AddParameterValue(Parameters[0].Id, 30);
         }
 
         private void LoadDone(string name)
@@ -48,10 +53,12 @@ namespace Live2d_For_WPF
                 live2d.SetIdParamAngleX("ParamAngleX");
                 live2d.SetMotionGroupTapBody("Tap@Body");
             }
+            live2d.SetRandomMotion(false);
+            live2d.SetCustomValue(true);
             Button_Click_3(null, null);
         }
 
-        private IntPtr LoadFile(string path, ref uint size) 
+        private IntPtr LoadFile(string path, ref uint size)
         {
             if (path.StartsWith("/Data"))
             {
@@ -140,7 +147,7 @@ namespace Live2d_For_WPF
 
             glControl.Load += GlControl_Load;
             Host.Child = glControl;//将控件放在WindowsFormsHost控件中
-            
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -173,30 +180,17 @@ namespace Live2d_For_WPF
             }
         }
 
-        record Motion 
-        {
-            public string group;
-            public int no;
-        }
-
         private string[] Expressions;
         private Motion[] Motions;
+        private Part[] Parts;
+        private Parameter[] Parameters;
         private Random random = new();
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             Expressions = live2d.GetExpressions();
-            var temp = live2d.GetMotions();
-            Motions = new Motion[temp.Length];
-            for(int i = 0;i < temp.Length;i++)
-            {
-                var item = temp[i];
-                var temp1 = item.Split("_");
-                Motions[i] = new()
-                {
-                    group = temp1[0],
-                    no = int.Parse(temp1[1])
-                };
-            }
+            Motions = live2d.GetMotions();
+            Parts = live2d.GetParts();
+            Parameters = live2d.GetParameters();
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
@@ -213,7 +207,19 @@ namespace Live2d_For_WPF
                 return;
 
             Motion item = Motions[random.Next(0, Motions.Length)];
-            live2d.StartMotion(item.group, item.no, 3);
+            live2d.StartMotion(item.Group, item.Number, 3);
+        }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            if (Parameters == null)
+                return;
+
+            Parameter item = Parameters[random.Next(0, Parameters.Length)];
+            float value = random.NextSingle()
+                * (item.MaximumValue - item.MinimumValue)
+                - item.DefaultValue;
+            live2d.AddParameterValue(item.Id, value);
         }
     }
 }

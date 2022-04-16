@@ -123,6 +123,7 @@ public:
     }
 
     bool NeedRandom;
+    bool CustomValue;
 
     void SetIdParamAngleX(System::String^ name);
     void SetIdParamAngleY(System::String^ name);

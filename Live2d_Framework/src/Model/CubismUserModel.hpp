@@ -263,6 +263,7 @@ public:
     * @param[in]    customData          CubismUserModelを継承したインスタンスを想定
     */
     static void   CubismDefaultMotionEventCallback(const CubismMotionQueueManager* caller, const csmString& eventValue, void* customData);
+
 protected:
     CubismMoc*              _moc;                       ///< Mocデータ
     CubismModel*            _model;                     ///< Modelインスタンス

@@ -532,6 +532,26 @@ public:
 
     Core::csmModel*     GetModel() const;
 
+    csmFloat32* ParameterValues()
+    {
+        return _parameterValues;
+    }
+
+    csmVector<CubismIdHandle>* ParameterIds()
+    {
+        return &_parameterIds;
+    }
+
+    csmVector<CubismIdHandle>* PartIds()
+    {
+        return &_partIds;
+    }
+
+    csmFloat32* PartOpacities() 
+    {
+        return _partOpacities;
+    }
+
 private:
     /**
      * @brief コンストラクタ

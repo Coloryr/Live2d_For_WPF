@@ -48,5 +48,10 @@
             VerticalAlignment="Top"
             Click="Button_Click_5"
             Content="随机动作" />
+        <Button
+            Margin="0,154,10,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Content="随机调整" Click="Button_Click_6" />
     </Grid>
 </Window>
