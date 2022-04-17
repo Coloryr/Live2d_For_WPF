@@ -27,7 +27,7 @@
     <ClCompile Include="src\glew\src\glew.c" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="src\glew\build\glew.rc" />
+    <ResourceCompile Include="src\glew\glew.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
