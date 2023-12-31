@@ -1,5 +1,7 @@
 # Live2d_For_WPF
 
+已过时，请转移到https://github.com/Coloryr/Live2DCSharpSDK
+
 一个渲染Live2d的WPF组件
 
 需要依赖OpenTK、OpenTK.WinForms
